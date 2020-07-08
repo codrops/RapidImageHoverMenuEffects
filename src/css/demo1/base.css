@@ -1,0 +1,363 @@
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+:root {
+	font-size: 12px;
+}
+
+body {
+	margin: 0;
+	--color-frame-bg: #ded7b3;
+	--color-text: #000;
+    --color-bg: #ece7ce;
+    --color-link: #ff5200;
+    --color-link-hover: #000;
+    --color-menu: #3a3005;
+    --color-menu-hover: #ff5200;
+    --color-menu-deco: #000;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    --cursor-stroke: none;
+    --cursor-fill: #0aa240;
+    --cursor-stroke-width: 1px;
+    -webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	font-family: wedding-gothic-atf, sans-serif;
+	font-weight: 600;
+}
+
+/* Page Loader */
+.js .loading::before,
+.js .loading::after {
+	content: '';
+	position: fixed;
+	z-index: 1000;
+}
+
+.js .loading::before {
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: var(--color-bg);
+}
+
+.js .loading::after {
+	top: 50%;
+	left: 50%;
+	width: 60px;
+	height: 60px;
+	margin: -30px 0 0 -30px;
+	opacity: 0.4;
+	background: var(--color-link);
+	animation: loaderAnim 0.7s linear infinite alternate forwards;
+
+}
+
+@keyframes loaderAnim {
+	to {
+		opacity: 1;
+		transform: scale3d(0.5,0.5,1);
+	}
+}
+
+a {
+	text-decoration: none;
+	color: var(--color-link);
+	outline: none;
+	cursor: pointer;
+}
+
+a:hover,
+a:focus {
+	color: var(--color-link-hover);
+	outline: none;
+}
+
+.frame {
+	position: relative;
+	padding: 1rem 1.5rem;
+	width: 100%;
+	display: flex;
+	text-transform: uppercase;
+	z-index: 1000;
+	background: var(--color-frame-bg);
+}
+
+.frame__title {
+	font-size: 1rem;
+	margin: 0;
+	font-weight: 600;
+}
+
+.frame__links, .frame__demos, .frame__demos {
+	margin: 0.5rem 0;
+}
+
+.frame__demos a {
+	border-bottom: 1px solid currentColor;
+	transition: 0.2s border-color;
+}
+
+.frame__demos a:hover, 
+.frame__demos a:focus {
+	border-color: transparent;
+}
+
+.frame__links a:not(:last-child), 
+.frame__demos a:not(:last-child) {
+	margin-right: 1rem;
+}
+
+a.frame__demo--current {
+	border-color: transparent;
+	color: var(--color-text);
+}
+
+.menu {
+	padding: 5rem 0 40vh 0;
+	position: relative;
+	display: grid;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	counter-reset: menucounter;
+}
+
+.menu__item {
+	justify-content: start;
+	position: relative;
+	display: grid;
+	width: 100%;
+	grid-template-areas: 'counter text';
+	grid-template-columns: 3rem auto;
+	grid-template-rows: auto;
+	padding: 0.5rem 1rem;
+	}
+
+.menu__item::before {
+	text-align: right;
+	grid-area: counter;
+	align-self: start;
+	justify-self: end;
+	counter-increment: menucounter;
+	content: counters(menucounter, ".", decimal-leading-zero);
+	color: var(--color-menu-deco);
+	opacity: 0;
+	font-family: wedding-gothic-atf, sans-serif;
+	font-weight: 100;
+	line-height: 1;
+	padding-right: 0.5rem;
+	display: grid;
+	place-items: center;
+	font-size: clamp(1.5rem, 5vw, 4rem);
+	transform: translateX(1rem);
+	transition: transform 0.3s, opacity 0.3s;
+}
+
+.menu__item:hover::before {
+	color: var(--color-menu-deco);
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.menu__item-text {
+	grid-area: text;
+	position: relative;
+	cursor: pointer;
+	display: block;
+	overflow: hidden;
+	line-height: 1;
+	height: 100%;
+}
+
+.menu__item-textinner {
+	font-size: clamp(3rem, 7vw, 5rem);
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: block;
+	font-family: ambroise-firmin-std, serif;
+	font-weight: 300;
+	text-transform: uppercase;
+	white-space: nowrap;
+	color: var(--color-menu);
+}
+
+.js .menu__item-textinner {
+	transform: translateY(100%);
+}
+
+.menu__item:hover .menu__item-textinner {
+	color: var(--color-menu-hover);
+}
+
+.menu__item-sub {
+	grid-area: sub;
+	display: none;
+	font-size: 10px;
+	text-transform: uppercase;
+	font-family: wedding-gothic-atf, sans-serif;
+	font-weight: 600;
+	white-space: nowrap;
+	position: relative;
+	width: 100%;
+	line-height: 1;
+	padding: 0 0 0.5rem 0;
+	color: var(--color-menu-deco);
+	opacity: 0;
+	margin-left: auto;
+	transform: translateX(-1rem);
+	transition: transform 0.3s, opacity 0.3s;
+}
+
+.menu__item:hover .menu__item-sub {
+	color: var(--color-menu-deco);
+	opacity: 1;
+	transform: translateX(0);
+}
+
+.hover-reveal {
+	position: absolute;
+	z-index: -1;
+	width: 300px;
+	height: 400px;
+	top: 0;
+	left: 0;
+	pointer-events: none;
+	opacity: 0;
+	will-change: transform, filter;
+}
+
+.hover-reveal__inner {
+	overflow: hidden;
+}
+
+.hover-reveal__inner,
+.hover-reveal__img {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+
+.hover-reveal__img {
+	background-size: cover;
+	background-position: 50% 50%;
+}
+
+.cursor {
+	display: none;
+}
+
+.credits {
+	align-self: flex-start;
+	padding: 5rem 0 0 0;
+}
+
+.credits a {
+	text-decoration: underline;
+}
+
+@media screen and (min-width: 53em) {
+	.frame {
+		pointer-events: none;
+		background: none;
+	}
+	.frame__title-wrap {
+		pointer-events: auto;
+	}
+	.frame__demos {
+		margin: 0.5rem 0 0;
+		justify-self: start;
+	}
+	.frame__demos a {
+		margin-right: 0.5rem;
+	}
+	.menu__item {
+		grid-template-areas: 
+		'. counter text . .' 
+		'. . sub . .';
+		grid-template-columns: 1fr 7rem auto 7rem 1fr;
+	}
+	.menu__item-sub {
+		display: block;
+	}
+}
+
+@media (any-pointer: fine) {
+	.cursor {
+		position: fixed;
+		top: 0;
+		left: 0;
+		display: block;
+		pointer-events: none;
+	}
+	.cursor__inner {
+		fill: var(--cursor-fill);
+		stroke: var(--cursor-stroke);
+		stroke-width: var(--cursor-stroke-width);
+		opacity: 0.7;
+	}
+	.credits {
+		padding-left: 25vw;
+	}
+}
+
+/*! locomotive-scroll v3.5.4 | MIT License | https://github.com/locomotivemtl/locomotive-scroll */
+html.has-scroll-smooth {
+	overflow: hidden; 
+}
+  
+html.has-scroll-dragging {
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none; 
+}
+  
+.has-scroll-smooth body {
+	overflow: hidden; 
+}
+  
+.has-scroll-smooth [data-scroll-container] {
+	min-height: 100vh; 
+}
+  
+.c-scrollbar {
+	position: absolute;
+	right: 0;
+	top: 0;
+	width: 11px;
+	height: 100vh;
+	transform-origin: center right;
+	transition: transform 0.3s, opacity 0.3s;
+	opacity: 0; 
+}
+.c-scrollbar:hover {
+	transform: scaleX(1.45); 
+}
+.c-scrollbar:hover, .has-scroll-scrolling .c-scrollbar, .has-scroll-dragging .c-scrollbar {
+	opacity: 1; 
+}
+  
+.c-scrollbar_thumb {
+	position: absolute;
+	top: 0;
+	right: 0;
+	background-color: black;
+	opacity: 0.5;
+	width: 7px;
+	border-radius: 10px;
+	margin: 2px;
+	cursor: -webkit-grab;
+	cursor: grab; 
+}
+.has-scroll-dragging .c-scrollbar_thumb {
+	cursor: -webkit-grabbing;
+	cursor: grabbing; 
+}
